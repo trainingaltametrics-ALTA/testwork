@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html><head><base target="_top"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box}body{font-family:system-ui,Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#1d4ed8);min-height:100vh;margin:0;display:grid;place-items:center;color:#172033;padding:16px}.panel{background:#fff;border-radius:20px;padding:32px;width:min(100%,430px);box-shadow:0 20px 60px #0003}h1{margin:0 0 8px;font-size:26px}p{color:#64748b;line-height:1.5}label{display:block;margin:18px 0 6px;font-weight:600}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px}button{width:100%;padding:14px;margin-top:22px;background:#2563eb;color:white;border:0;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}button:disabled{opacity:.6;cursor:wait}.back{background:#e2e8f0;color:#0f172a;margin-top:12px}.error{color:#b91c1c}.info{background:#f1f5f9;padding:14px;border-radius:10px;overflow-wrap:anywhere}.hidden{display:none}.small{font-size:13px}
+</style></head><body>
+<section class="panel" id="loginPanel"><h1>Employee Login</h1><p>Sign in with your employee credentials.</p>
+<form id="loginForm"><label for="empId">Employee ID</label><input id="empId" autocomplete="username" required>
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+<button id="loginButton" type="submit">Sign in</button></form><button class="back" type="button" onclick="goHome()">← Back to Home</button><p class="error" id="loginError" role="alert"></p></section>
+<section class="panel hidden" id="welcomePanel"><h1 id="welcomeTitle">Welcome!</h1><p id="employeeDetails"></p>
+<div class="info"><strong>Location</strong><p id="locationText" aria-live="polite">Waiting for permission…</p><p class="small" id="coordinateText"></p></div>
+<button id="retryButton" type="button">Retry location</button><button id="logoutButton" type="button" style="background:#475569">Log out</button><button class="back" type="button" onclick="goHome()">← Back to Home</button></section>
+<script>
+const HOME_URL='https://sites.google.com/view/demonomm/home';
+function goHome(){window.open(HOME_URL,'_top');}
+let sessionToken='';
+const el=id=>document.getElementById(id);
+el('loginForm').addEventListener('submit',event=>{
+ event.preventDefault();el('loginError').textContent='';el('loginButton').disabled=true;
+ google.script.run.withSuccessHandler(result=>{
+  el('loginButton').disabled=false;
+  if(!result.ok){el('loginError').textContent=result.message;return;}
+  sessionToken=result.token;el('password').value='';el('loginPanel').classList.add('hidden');el('welcomePanel').classList.remove('hidden');
+  el('welcomeTitle').textContent='Welcome, '+result.employee.name+'!';
+  el('employeeDetails').textContent='ID: '+result.employee.id+' | Role: '+result.employee.role;
+  captureLocation();
+ }).withFailureHandler(error=>{el('loginButton').disabled=false;el('loginError').textContent=error.message||'Login failed';}).login(el('empId').value,el('password').value);
+});
+function saveLocation(payload){
+ google.script.run.withSuccessHandler(result=>{
+  el('locationText').textContent=result.status==='Granted'?result.address:'Location '+result.status.toLowerCase();
+  el('coordinateText').textContent=result.latitude===null?'':`Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
+ }).withFailureHandler(error=>{el('locationText').textContent='Unable to save location: '+error.message;}).logLocation(sessionToken,payload);
+}
+function captureLocation(){
+ el('locationText').textContent='Requesting location permission…';el('coordinateText').textContent='';
+ if(!navigator.geolocation){saveLocation({status:'Not supported'});return;}
+ navigator.geolocation.getCurrentPosition(
+  pos=>saveLocation({latitude:pos.coords.latitude,longitude:pos.coords.longitude,accuracy:pos.coords.accuracy,status:'Granted'}),
+  error=>saveLocation({status:({1:'Denied',2:'Position unavailable',3:'Timed out'})[error.code]||'Unavailable'}),
+  {enableHighAccuracy:true,timeout:20000,maximumAge:0}
+ );
+}
+el('retryButton').addEventListener('click',captureLocation);
+el('logoutButton').addEventListener('click',()=>{sessionToken='';el('welcomePanel').classList.add('hidden');el('loginPanel').classList.remove('hidden');});
+</script></body></html>
