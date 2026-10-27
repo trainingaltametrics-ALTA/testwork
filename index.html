@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>GPS Location Test</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef4ff;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px #0001;
+      text-align: center;
+    }
+
+    h2 { color: #1e40af; }
+
+    button {
+      background: #2563eb;
+      color: white;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .result {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: left;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .error { color: #dc2626; }
+    .success { color: #15803d; }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h2>📍 GPS Location Test</h2>
+    <p>Check whether your device allows GPS access.</p>
+
+    <button onclick="getLocation()">
+      Get My Location
+    </button>
+
+    <div class="result" id="result">
+      Click the button to request location.
+    </div>
+  </div>
+
+  <script>
+    function getLocation() {
+      const result = document.getElementById("result");
+
+      if (!navigator.geolocation) {
+        result.innerHTML =
+          '<span class="error">' +
+          'Geolocation is not supported in this WebViewer.' +
+          '</span>';
+        return;
+      }
+
+      result.textContent = "Requesting GPS permission...";
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+
+          result.innerHTML = `
+            <div class="success">
+              <strong>✓ Location Captured Successfully</strong>
+            </div>
+            <strong>Latitude:</strong> ${lat}<br>
+            <strong>Longitude:</strong> ${lon}<br>
+            <strong>Accuracy:</strong> ${accuracy.toFixed(1)} meters<br>
+            <a href="https://www.google.com/maps?q=${lat},${lon}"
+               target="_blank" rel="noopener noreferrer">
+              View on Google Maps
+            </a>
+          `;
+        },
+        function(error) {
+          const messages = {
+            1: "Permission Denied",
+            2: "Position Unavailable",
+            3: "GPS Request Timed Out"
+          };
+
+          result.innerHTML = `
+            <span class="error">
+              Location Failed: ${messages[error.code] ||
+                error.message}
+            </span>
+          `;
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 0
+        }
+      );
+    }
+  </script>
+</body>
+</html>
