@@ -32,6 +32,48 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
 .site .site-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#e6efff;color:#2456d3;font-size:21px;margin-bottom:12px}
 .location-line{font-size:13px;color:#64748b;margin:8px 0 16px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ANR immersive, performance-conscious live-weather experience */
+.weather-host{position:relative;isolation:isolate;overflow:hidden;--wx-top:#0c2757;--wx-bottom:#3774a5;--wx-orb:#ffdb82;--wx-orb-glow:#ffe1a36b}
+.weather-host[data-weather="clear"][data-night="true"]{--wx-top:#060f2d;--wx-bottom:#202a64;--wx-orb:#f3f5e4;--wx-orb-glow:#c5d6ff55}
+.weather-host[data-weather="rain"],.weather-host[data-weather="storm"]{--wx-top:#10223f;--wx-bottom:#435976;--wx-orb:#b5c8de;--wx-orb-glow:#a9c5ee33}
+.weather-host[data-weather="clouds"]{--wx-top:#233d63;--wx-bottom:#7599b3;--wx-orb:#f5e7bd;--wx-orb-glow:#e4ecfa44}
+.weather-host[data-weather="snow"]{--wx-top:#577b9d;--wx-bottom:#a6c6d8;--wx-orb:#fff;--wx-orb-glow:#fff9}
+.weather-host[data-weather="fog"]{--wx-top:#46556d;--wx-bottom:#9ba9b6;--wx-orb:#f6f5dc;--wx-orb-glow:#fff8}
+.weather-host[data-weather="clear"][data-night="false"]{--wx-top:#0860ad;--wx-bottom:#77c8ed}
+.weather-scene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(160deg,var(--wx-top),var(--wx-bottom));transition:background 1s}
+.weather-host.screen{background:transparent!important}
+.weather-host.screen>.card,.weather-host.shell>.topbar,.weather-host.shell>.main{position:relative;z-index:2}
+.weather-host.shell{background:#f2f5fa}
+.weather-host.shell>.weather-scene{height:420px;bottom:auto;mask-image:linear-gradient(#000 0%,#000 68%,transparent 100%);-webkit-mask-image:linear-gradient(#000 0%,#000 68%,transparent 100%)}
+.weather-host.shell .topbar{background:#0a193a77;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.weather-halo{position:absolute;top:0;right:-10%;width:75vmin;height:75vmin;border-radius:50%;background:radial-gradient(circle,var(--wx-orb-glow),transparent 67%);filter:blur(18px);animation:weatherBreathe 8s ease-in-out infinite alternate}
+.weather-orb{position:absolute;right:13%;top:10%;width:95px;height:95px;border-radius:50%;background:var(--wx-orb);box-shadow:0 0 34px var(--wx-orb-glow),0 0 100px var(--wx-orb-glow);animation:weatherBreathe 7s ease-in-out infinite alternate}
+.weather-host[data-night="true"][data-weather="clear"] .weather-orb{background:radial-gradient(circle at 38% 35%,#fff,#e0e8fa);box-shadow:0 0 38px #b9d0ff77,0 0 110px #b9d0ff33}
+.weather-cloud{position:absolute;width:245px;height:85px;border-radius:100px;background:#ffffff45;filter:blur(2px);box-shadow:42px -24px 0 4px #ffffff33,105px -4px 0 1px #ffffff28;animation:cloudDrift 24s ease-in-out infinite alternate}
+.cloud-one{top:24%;left:-90px}.cloud-two{top:47%;right:-160px;transform:scale(.7);animation-duration:32s;animation-direction:alternate-reverse}
+.weather-stars{position:absolute;inset:0;opacity:0;background-image:radial-gradient(2px 2px at 12% 18%,#fff 99%,transparent),radial-gradient(2px 2px at 42% 8%,#fff 99%,transparent),radial-gradient(2px 2px at 65% 34%,#fff 99%,transparent),radial-gradient(2px 2px at 85% 13%,#fff 99%,transparent),radial-gradient(1px 1px at 30% 53%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 61%,#fff 99%,transparent);background-size:240px 230px;animation:twinkle 4s ease-in-out infinite alternate}
+.weather-host[data-night="true"] .weather-stars{opacity:.85}
+.weather-particles{position:absolute;inset:-100% 0 0;opacity:0;background-image:repeating-linear-gradient(110deg,transparent 0 22px,#e6f3ff99 23px 24px,transparent 25px 55px);background-size:180px 220px;animation:fallingRain .7s linear infinite}
+.weather-host[data-weather="rain"] .weather-particles,.weather-host[data-weather="storm"] .weather-particles{opacity:.42}
+.weather-host[data-weather="snow"] .weather-particles{opacity:.8;background-image:radial-gradient(circle,#fff 2px,transparent 3px),radial-gradient(circle,#fff 2px,transparent 3px);background-size:75px 95px,125px 150px;animation-duration:8s}
+.weather-host[data-weather="storm"] .weather-scene{animation:stormFlash 12s linear infinite}
+.weather-host[data-weather="fog"] .weather-cloud{filter:blur(22px);opacity:.8}
+.weather-chip{display:inline-flex;margin-top:10px;padding:7px 13px;border-radius:999px;background:#edf4ff;color:#244675;font-size:12px;font-weight:700}
+.weather-banner{display:flex;align-items:center;gap:14px;margin-bottom:19px;padding:17px 20px;border:1px solid #ffffff7d;border-radius:20px;color:#fff;background:#ffffff26;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 15px 40px #001c422b}
+.weather-banner-icon{font-size:38px;min-width:42px;text-align:center;filter:drop-shadow(0 2px 12px #ffffff55)}
+.weather-banner-title{font-size:18px;font-weight:800}.weather-banner-sub{font-size:12px;color:#eef5ff;margin-top:4px}
+.weather-banner-temp{margin-left:auto;font-size:25px;font-weight:800;white-space:nowrap}
+.weather-host.shell .tabs{position:relative;z-index:2}
+.weather-host.shell .tabs button{box-shadow:0 3px 14px #102a4c18}
+@keyframes weatherBreathe{to{transform:translateY(15px) scale(1.12);opacity:.82}}
+@keyframes cloudDrift{to{translate:90px 10px}}
+@keyframes twinkle{to{opacity:.35}}
+@keyframes fallingRain{to{transform:translateY(220px)}}
+@keyframes stormFlash{0%,91%,94%,100%{filter:brightness(1)}92%,93%{filter:brightness(1.5)}}
+@media(max-width:520px){.weather-orb{width:70px;height:70px;right:9%;top:9%}.weather-banner{padding:13px;gap:9px}.weather-banner-title{font-size:15px}.weather-banner-temp{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.weather-host *{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -47,18 +89,29 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
     <p class="fine" style="text-align:center">Your location will be requested after successful sign-in.</p>
   </div>
 </section>
-<section id="gpsScreen" class="screen hidden">
+<section id="gpsScreen" class="screen hidden weather-host">
+  <div class="weather-scene" aria-hidden="true">
+  <div class="weather-halo"></div><div class="weather-orb"></div>
+  <div class="weather-cloud cloud-one"></div><div class="weather-cloud cloud-two"></div>
+  <div class="weather-stars"></div><div class="weather-particles"></div>
+</div>
   <div class="card">
-    <div class="brand"><div class="brand-mark">⌖</div><h1>ANR Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p></div>
+    <div class="brand"><div class="brand-mark">⌖</div><h1>ANR Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p><div class="weather-chip" id="gpsWeather">Your sky is coming into focus</div></div>
     <p class="muted">To continue, allow location access. Your coordinates will be saved to your login record.</p>
     <button id="gpsBtn" class="btn full" type="button">VERIFY MY LOCATION</button>
     <div id="gpsMsg" class="notice" role="status">Waiting for location permission.</div>
     <button id="gpsLogout" class="btn secondary full" type="button">Back to Login</button>
   </div>
 </section>
-<section id="appScreen" class="shell hidden">
+<section id="appScreen" class="shell hidden weather-host">
+  <div class="weather-scene" aria-hidden="true">
+  <div class="weather-halo"></div><div class="weather-orb"></div>
+  <div class="weather-cloud cloud-one"></div><div class="weather-cloud cloud-two"></div>
+  <div class="weather-stars"></div><div class="weather-particles"></div>
+</div>
   <header class="topbar"><div><strong>ANR Employee Portal</strong><div id="who" class="muted" style="color:#cbd7ed"></div></div><button id="logoutBtn" class="btn small" type="button">Logout</button></header>
   <main class="main">
+    <div class="weather-banner" aria-live="polite"><div class="weather-banner-icon" id="weatherIcon">✦</div><div><div class="weather-banner-title" id="weatherTitle">Welcome to your workspace</div><div class="weather-banner-sub" id="weatherSubtitle">A beautiful day to get things done</div></div><div class="weather-banner-temp" id="weatherTemp"></div></div>
     <div class="tabs"><button data-tab="home" class="active">My Websites</button><button data-tab="password">Change Password</button><button data-tab="admin" id="adminTab" class="hidden">Admin Console</button></div>
     <section id="homePanel" class="panel"><h2>Your Workspace</h2><p class="muted">Welcome back. Choose where you would like to go.</p><div id="locationLine" class="location-line" aria-live="polite"></div><div id="sites" class="grid"></div><div id="homeMsg" class="notice hidden"></div></section>
     <section id="passwordPanel" class="panel hidden">
@@ -70,9 +123,9 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
       </form>
       <form id="changeForm" class="hidden">
         <div class="notice success">Existing credentials verified. Enter and confirm your new password.</div>
-        <div class="field"><label for="newPassword">New Password</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="12"></div>
-        <div class="field"><label for="confirmPassword">Confirm New Password</label><input id="confirmPassword" type="password" autocomplete="new-password" required minlength="12"></div>
-        <p class="fine">12–128 characters, including uppercase, lowercase, number and symbol.</p>
+        <div class="field"><label for="newPassword">New Password</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="6"></div>
+        <div class="field"><label for="confirmPassword">Confirm New Password</label><input id="confirmPassword" type="password" autocomplete="new-password" required minlength="6"></div>
+        <p class="fine">6–128 characters, including uppercase, lowercase, number and symbol.</p>
         <button id="changeBtn" class="btn" type="submit">Update Password</button>
       </form>
       <div id="passwordMsg" class="notice hidden" role="status"></div>
@@ -83,7 +136,7 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
         <div class="panel"><h2>Add / Update Destination</h2><form id="siteForm"><div class="field"><label>Config ID</label><input id="siteId" required placeholder="SITE001" maxlength="40"></div><div class="field"><label>Display Name</label><input id="siteName" required placeholder="Employee Home" maxlength="100"></div><div class="field"><label>HTTPS Destination URL</label><input id="siteUrl" type="url" required placeholder="https://sites.google.com/..."></div><div class="field"><label>Status</label><select id="siteStatus"><option>Active</option><option>Inactive</option></select></div><button class="btn full" type="submit">Save Destination</button></form></div>
         <div class="panel"><h2>Assign Employee Access</h2><form id="accessForm"><div class="field"><label>Employee</label><select id="accessEmployee" required></select></div><div class="field"><label>Destination</label><select id="accessSite" required></select></div><div class="field"><label>Access</label><select id="accessStatus"><option>Allowed</option><option>Denied</option></select></div><button class="btn full" type="submit">Save Permission</button></form></div>
         <div class="panel"><h2>Employee Status</h2><form id="statusForm"><div class="field"><label>Employee</label><select id="statusEmployee" required></select></div><div class="field"><label>Account Status</label><select id="employeeStatus"><option>Active</option><option>Inactive</option></select></div><button class="btn full" type="submit">Update Status</button></form></div>
-        <div class="panel"><h2>Reset Employee Password</h2><form id="resetForm"><div class="field"><label>Employee</label><select id="resetEmployee" required></select></div><div class="field"><label>New Temporary Password</label><input id="resetPassword" type="password" required minlength="12" autocomplete="new-password"></div><p class="fine">12+ characters with uppercase, lowercase, number and symbol. Share the temporary password securely.</p><button class="btn danger full" type="submit">Reset Password</button></form></div>
+        <div class="panel"><h2>Reset Employee Password</h2><form id="resetForm"><div class="field"><label>Employee</label><select id="resetEmployee" required></select></div><div class="field"><label>New Temporary Password</label><input id="resetPassword" type="password" required minlength="6" autocomplete="new-password"></div><p class="fine">6+ characters with uppercase, lowercase, number and symbol. Share the temporary password securely.</p><button class="btn danger full" type="submit">Reset Password</button></form></div>
       </div>
       <div class="panel"><h2>Configured Destinations</h2><div class="table-wrap"><table><thead><tr><th>Config ID</th><th>Name</th><th>Status</th><th>Edit</th></tr></thead><tbody id="siteRows"></tbody></table></div></div>
       <div class="panel"><h2>Current Employee Assignments</h2><div class="table-wrap"><table><thead><tr><th>Employee ID</th><th>Site ID</th><th>Permission</th></tr></thead><tbody id="assignmentRows"></tbody></table></div></div>
@@ -97,6 +150,7 @@ const API_URL = 'https://mute-queen-b19btesting.training-altametrics.workers.dev
 const $ = id => document.getElementById(id);
 let token = '', employee = null, verificationToken = '', adminData = null;
 let verifiedCity = '';
+let weatherState = null;
 function updateAtmosphere(){
   const hour=new Date().getHours();
   const period=hour>=5&&hour<12?'morning':hour>=12&&hour<17?'afternoon':hour>=17&&hour<20?'evening':'night';
@@ -106,6 +160,49 @@ function updateAtmosphere(){
 }
 updateAtmosphere();
 setInterval(updateAtmosphere,60000);
+
+/* Live weather: Open-Meteo public forecast endpoint. GPS coords sent only after consent.
+   Weather failures never block GPS logging, access, or employee navigation. */
+function weatherInfo(code, isDay){
+  if(code===0) return {type:'clear',label:isDay?'Clear sky':'Clear night',icon:isDay?'☀️':'🌙'};
+  if([1,2,3].includes(code)) return {type:'clouds',label:'Partly cloudy',icon:'☁️'};
+  if([45,48].includes(code)) return {type:'fog',label:'Misty skies',icon:'🌫️'};
+  if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code)) return {type:'rain',label:'Rainy skies',icon:'🌧️'};
+  if([71,73,75,77,85,86].includes(code)) return {type:'snow',label:'Snowfall',icon:'❄️'};
+  if([95,96,99].includes(code)) return {type:'storm',label:'Thunderstorms',icon:'⛈️'};
+  return {type:'clouds',label:'Changing skies',icon:'🌤️'};
+}
+function renderWeather(){
+  const hour=new Date().getHours(),isNight=weatherState?weatherState.isDay===0:(hour<6||hour>=19);
+  const w=weatherState?weatherInfo(weatherState.code,!isNight):weatherInfo(0,!isNight);
+  ['gpsScreen','appScreen'].forEach(id=>{
+    const el=$(id);el.dataset.weather=w.type;el.dataset.night=String(isNight);
+  });
+  const place=verifiedCity||'Your area';
+  $('gpsWeather').textContent=weatherState?`${w.icon} ${w.label} · ${place}`:`${isNight?'🌙':'☀️'} ${place} · Sky-inspired experience`;
+  $('weatherIcon').textContent=w.icon;
+  $('weatherTitle').textContent=weatherState?`${w.label} in ${place}`:`Welcome${verifiedCity?' to '+verifiedCity:''}`;
+  $('weatherSubtitle').textContent=weatherState?'Live local conditions · ANR Employee Portal':'Your workspace is ready';
+  $('weatherTemp').textContent=weatherState?Math.round(weatherState.temp)+'°C':'';
+}
+async function loadLiveWeather(latitude,longitude){
+  try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),9000);
+    try{
+      const u='https://api.open-meteo.com/v1/forecast?latitude='+encodeURIComponent(latitude)+
+        '&longitude='+encodeURIComponent(longitude)+'&current=temperature_2m,weather_code,is_day&timezone=auto';
+      const res=await fetch(u,{signal:controller.signal,cache:'no-store'});
+      if(!res.ok)throw new Error('Weather unavailable');
+      const data=await res.json(),current=data.current;
+      if(!current||!Number.isFinite(Number(current.temperature_2m)))throw new Error('No weather data');
+      weatherState={temp:Number(current.temperature_2m),code:Number(current.weather_code),isDay:Number(current.is_day)};
+    }finally{clearTimeout(timeout);}
+  }catch(e){console.warn('Weather display fallback:',e.message);}
+  renderWeather();
+}
+renderWeather();
+
 function showScreen(id){['loginScreen','gpsScreen','appScreen'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
 function message(id,text,kind=''){const el=$(id);el.textContent=text||'';el.className='notice'+(kind?' '+kind:'')+(text?'':' hidden');}
 function setBusy(button,busy,label){button.disabled=busy;if(busy){button.dataset.original=button.textContent;button.textContent=label||'Please wait...';}else{button.textContent=button.dataset.original||button.textContent;}}
@@ -119,19 +216,19 @@ async function api(action,fields={}){
   }catch(e){if(e.name==='AbortError')throw new Error('Request timed out. Please try again.');throw e;}finally{clearTimeout(timeout);}
 }
 function clearPasswordState(){verificationToken='';$('verifyForm').classList.remove('hidden');$('changeForm').classList.add('hidden');$('currentPassword').value='';$('newPassword').value='';$('confirmPassword').value='';message('passwordMsg','');}
-function localLogout(){verifiedCity='';token='';employee=null;verificationToken='';adminData=null;$('loginPassword').value='';$('loginForm').reset();clearPasswordState();showScreen('loginScreen');}
+function localLogout(){weatherState=null;verifiedCity='';token='';employee=null;verificationToken='';adminData=null;$('loginPassword').value='';$('loginForm').reset();clearPasswordState();showScreen('loginScreen');}
 async function logout(){const old=token;localLogout();if(old){try{await api('logout',{token:old});}catch(e){console.warn(e);}}}
 $('logoutBtn').addEventListener('click',logout);$('gpsLogout').addEventListener('click',logout);
 $('loginForm').addEventListener('submit',async event=>{
   event.preventDefault();const btn=$('loginBtn');setBusy(btn,true,'Signing in...');message('loginMsg','');
-  try{const result=await api('login',{employeeId:$('loginId').value.trim(),password:$('loginPassword').value});token=result.token;employee=result.employee;$('loginPassword').value='';$('gpsWelcome').textContent='Welcome, '+employee.name;showScreen('gpsScreen');message('gpsMsg','Tap the button to capture your location.');}
+  try{const result=await api('login',{employeeId:$('loginId').value.trim(),password:$('loginPassword').value});token=result.token;employee=result.employee;$('loginPassword').value='';$('gpsWelcome').textContent='Welcome, '+employee.name;showScreen('gpsScreen');renderWeather();message('gpsMsg','Tap the button to capture your location.');}
   catch(e){message('loginMsg',e.message,'error');}finally{setBusy(btn,false);}
 });
 $('gpsBtn').addEventListener('click',()=>{
   if(!navigator.geolocation){message('gpsMsg','Location is unavailable in this browser.','error');return;}
   const btn=$('gpsBtn');setBusy(btn,true,'Obtaining GPS...');message('gpsMsg','Requesting device location...');
   navigator.geolocation.getCurrentPosition(async pos=>{
-    try{message('gpsMsg','Recording your location securely...');const c=pos.coords;const loc=await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});verifiedCity=String(loc.city||'').trim();message('gpsMsg',verifiedCity?'Your location has been recorded · '+verifiedCity:'Your location has been recorded.','success');const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
+    try{message('gpsMsg','Recording your location securely...');const c=pos.coords;const loc=await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});verifiedCity=String(loc.city||'').trim();renderWeather();loadLiveWeather(c.latitude,c.longitude);message('gpsMsg',verifiedCity?'Your location has been recorded · '+verifiedCity:'Your location has been recorded.','success');const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
     catch(e){message('gpsMsg',e.message,'error');}finally{setBusy(btn,false);}
   },err=>{const errors={1:'Location permission denied. Enable location access in Thunkable and your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:true,timeout:25000,maximumAge:0});
 });
