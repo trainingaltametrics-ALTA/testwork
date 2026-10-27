@@ -71,7 +71,7 @@
 <script>
 'use strict';
 // REPLACE THIS WITH YOUR REAL CLOUDFLARE WORKER URL (NO TRAILING SLASH).
-const API_URL = 'mute-queen-b19btesting.training-altametrics.workers.dev';
+const API_URL = 'https://mute-queen-b19btesting.training-altametrics.workers.dev';
 const $ = id => document.getElementById(id);
 let token = '', employee = null, verificationToken = '', adminData = null;
 function showScreen(id){['loginScreen','gpsScreen','appScreen'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
