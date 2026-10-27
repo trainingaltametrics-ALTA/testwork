@@ -1,132 +1,121 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <title>GPS Location Test</title>
-
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #eef4ff;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px #0001;
-      text-align: center;
-    }
-
-    h2 { color: #1e40af; }
-
-    button {
-      background: #2563eb;
-      color: white;
-      padding: 14px 22px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .result {
-      background: #f1f5f9;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      text-align: left;
-      line-height: 1.9;
-      overflow-wrap: anywhere;
-    }
-
-    .error { color: #dc2626; }
-    .success { color: #15803d; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1730">
+<title>Employee Secure Portal</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#18243b;background:#edf2f9;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100dvh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}a{color:#2356d8;overflow-wrap:anywhere}
+.screen{min-height:100vh;min-height:100dvh;padding:20px 14px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 10% 10%,#244d91 0%,transparent 35%),linear-gradient(145deg,#08152e,#152f58 60%,#0a1730)}
+.card{width:100%;max-width:440px;background:#fff;border-radius:22px;padding:28px 24px;box-shadow:0 24px 75px #0005}.brand{text-align:center;margin-bottom:24px}.brand-mark{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:19px;background:#eaf0ff;color:#194ac6;font-size:30px;font-weight:800;margin-bottom:12px}.brand h1{margin:0;font-size:24px;letter-spacing:.5px}.muted{color:#65748a;font-size:13px}.brand p{margin:7px 0 0}.field{margin:14px 0}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}.field input,.field select{width:100%;min-height:49px;border:1px solid #cdd7e7;border-radius:11px;background:#fff;padding:11px 12px;outline:none;color:#18243b}.field input:focus,.field select:focus{border-color:#2458d7;box-shadow:0 0 0 3px #2458d722}.btn{border:0;border-radius:11px;min-height:48px;padding:11px 16px;font-weight:750;background:#2456d3;color:white}.btn:hover:not(:disabled){background:#1a46b2}.btn.secondary{background:#eaf0fb;color:#17449e}.btn.danger{background:#b52b41}.btn.small{min-height:37px;padding:8px 12px;font-size:13px}.btn.full{width:100%}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{min-width:0}.between{justify-content:space-between}.notice{border-radius:10px;padding:11px 13px;margin:14px 0;font-size:13px;line-height:1.5;background:#edf4ff;color:#214a86}.notice.error{background:#fff0f0;color:#a21d34}.notice.success{background:#e9f8ef;color:#136b38}.hidden{display:none!important}.shell{min-height:100vh;min-height:100dvh;background:#f2f5fa}.topbar{background:#102448;color:#fff;padding:15px max(18px,calc((100vw - 1080px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}.topbar strong{font-size:16px}.topbar .btn{background:#314c79;color:white}.main{max-width:1080px;margin:auto;padding:24px 16px 60px}.panel{background:#fff;border:1px solid #e0e6f0;border-radius:16px;padding:20px;margin:0 0 18px;box-shadow:0 5px 18px #1528490a}.panel h2{font-size:19px;margin:0 0 9px}.panel h3{font-size:15px;margin:18px 0 10px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}.site{border:1px solid #dbe5f4;border-radius:13px;padding:17px;background:#f9fbff}.site h3{margin:0 0 8px}.site p{font-size:12px;color:#6a7890;overflow-wrap:anywhere;min-height:35px}.site .btn{width:100%}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.tabs button{border:1px solid #d8e1ef;background:white;color:#25416b;padding:10px 13px;border-radius:10px;font-weight:700}.tabs button.active{background:#1c4cbd;color:#fff;border-color:#1c4cbd}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid #e5ebf3;padding:10px;text-align:left;white-space:nowrap}th{background:#f4f7fc}.fine{font-size:12px;color:#718096;line-height:1.5}.busy{opacity:.7;pointer-events:none}@media(max-width:520px){.card{padding:24px 19px}.brand h1{font-size:21px}.main{padding:17px 12px 40px}.panel{padding:16px}.topbar{padding:12px 14px}}
+</style>
 </head>
-
 <body>
+<section id="loginScreen" class="screen">
   <div class="card">
-    <h2>📍 GPS Location Test</h2>
-    <p>Check whether your device allows GPS access.</p>
-
-    <button onclick="getLocation()">
-      Get My Location
-    </button>
-
-    <div class="result" id="result">
-      Click the button to request location.
-    </div>
+    <div class="brand"><div class="brand-mark">✦</div><h1>EMPLOYEE PORTAL</h1><p class="muted">Secure access for authorized personnel</p></div>
+    <form id="loginForm">
+      <div class="field"><label for="loginId">Employee ID</label><input id="loginId" autocomplete="username" required placeholder="Enter Employee ID"></div>
+      <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password"></div>
+      <button id="loginBtn" class="btn full" type="submit">SECURE LOGIN</button>
+    </form>
+    <div id="loginMsg" class="notice hidden" role="status"></div>
+    <p class="fine" style="text-align:center">Your location will be requested after successful sign-in.</p>
   </div>
-
-  <script>
-    function getLocation() {
-      const result = document.getElementById("result");
-
-      if (!navigator.geolocation) {
-        result.innerHTML =
-          '<span class="error">' +
-          'Geolocation is not supported in this WebViewer.' +
-          '</span>';
-        return;
-      }
-
-      result.textContent = "Requesting GPS permission...";
-
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const accuracy = position.coords.accuracy;
-
-          result.innerHTML = `
-            <div class="success">
-              <strong>✓ Location Captured Successfully</strong>
-            </div>
-            <strong>Latitude:</strong> ${lat}<br>
-            <strong>Longitude:</strong> ${lon}<br>
-            <strong>Accuracy:</strong> ${accuracy.toFixed(1)} meters<br>
-            <a href="https://www.google.com/maps?q=${lat},${lon}"
-               target="_blank" rel="noopener noreferrer">
-              View on Google Maps
-            </a>
-          `;
-        },
-        function(error) {
-          const messages = {
-            1: "Permission Denied",
-            2: "Position Unavailable",
-            3: "GPS Request Timed Out"
-          };
-
-          result.innerHTML = `
-            <span class="error">
-              Location Failed: ${messages[error.code] ||
-                error.message}
-            </span>
-          `;
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 20000,
-          maximumAge: 0
-        }
-      );
-    }
-  </script>
+</section>
+<section id="gpsScreen" class="screen hidden">
+  <div class="card">
+    <div class="brand"><div class="brand-mark">⌖</div><h1>Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p></div>
+    <p class="muted">To continue, allow location access. Your coordinates will be saved to your login record.</p>
+    <button id="gpsBtn" class="btn full" type="button">VERIFY MY LOCATION</button>
+    <div id="gpsMsg" class="notice" role="status">Waiting for location permission.</div>
+    <button id="gpsLogout" class="btn secondary full" type="button">Back to Login</button>
+  </div>
+</section>
+<section id="appScreen" class="shell hidden">
+  <header class="topbar"><div><strong>EMPLOYEE PORTAL</strong><div id="who" class="muted" style="color:#cbd7ed"></div></div><button id="logoutBtn" class="btn small" type="button">Logout</button></header>
+  <main class="main">
+    <div class="tabs"><button data-tab="home" class="active">My Websites</button><button data-tab="password">Change Password</button><button data-tab="admin" id="adminTab" class="hidden">Admin Console</button></div>
+    <section id="homePanel" class="panel"><h2>Authorized Websites</h2><p class="muted">Only websites assigned to your employee ID are shown here.</p><div id="sites" class="grid"></div><div id="homeMsg" class="notice hidden"></div></section>
+    <section id="passwordPanel" class="panel hidden">
+      <h2>Change Password</h2><p class="muted">First verify your existing Employee ID and password.</p>
+      <form id="verifyForm">
+        <div class="field"><label for="verifyId">Employee ID</label><input id="verifyId" required autocomplete="username"></div>
+        <div class="field"><label for="currentPassword">Current Password</label><input id="currentPassword" type="password" required autocomplete="current-password"></div>
+        <button id="verifyBtn" class="btn" type="submit">Verify Existing Credentials</button>
+      </form>
+      <form id="changeForm" class="hidden">
+        <div class="notice success">Existing credentials verified. Enter and confirm your new password.</div>
+        <div class="field"><label for="newPassword">New Password</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="12"></div>
+        <div class="field"><label for="confirmPassword">Confirm New Password</label><input id="confirmPassword" type="password" autocomplete="new-password" required minlength="12"></div>
+        <p class="fine">12–128 characters, including uppercase, lowercase, number and symbol.</p>
+        <button id="changeBtn" class="btn" type="submit">Update Password</button>
+      </form>
+      <div id="passwordMsg" class="notice hidden" role="status"></div>
+    </section>
+    <section id="adminPanel" class="hidden">
+      <div class="panel"><div class="row between"><h2>Admin Console</h2><button id="refreshAdmin" class="btn secondary small">Refresh Data</button></div><p class="muted">Manage websites, employee permissions, employee status and password resets.</p><div id="adminMsg" class="notice hidden" role="status"></div></div>
+      <div class="grid">
+        <div class="panel"><h2>Add / Update Destination</h2><form id="siteForm"><div class="field"><label>Config ID</label><input id="siteId" required placeholder="SITE001" maxlength="40"></div><div class="field"><label>Display Name</label><input id="siteName" required placeholder="Employee Home" maxlength="100"></div><div class="field"><label>HTTPS Destination URL</label><input id="siteUrl" type="url" required placeholder="https://sites.google.com/..."></div><div class="field"><label>Status</label><select id="siteStatus"><option>Active</option><option>Inactive</option></select></div><button class="btn full" type="submit">Save Destination</button></form></div>
+        <div class="panel"><h2>Assign Employee Access</h2><form id="accessForm"><div class="field"><label>Employee</label><select id="accessEmployee" required></select></div><div class="field"><label>Destination</label><select id="accessSite" required></select></div><div class="field"><label>Access</label><select id="accessStatus"><option>Allowed</option><option>Denied</option></select></div><button class="btn full" type="submit">Save Permission</button></form></div>
+        <div class="panel"><h2>Employee Status</h2><form id="statusForm"><div class="field"><label>Employee</label><select id="statusEmployee" required></select></div><div class="field"><label>Account Status</label><select id="employeeStatus"><option>Active</option><option>Inactive</option></select></div><button class="btn full" type="submit">Update Status</button></form></div>
+        <div class="panel"><h2>Reset Employee Password</h2><form id="resetForm"><div class="field"><label>Employee</label><select id="resetEmployee" required></select></div><div class="field"><label>New Temporary Password</label><input id="resetPassword" type="password" required minlength="12" autocomplete="new-password"></div><p class="fine">12+ characters with uppercase, lowercase, number and symbol. Share the temporary password securely.</p><button class="btn danger full" type="submit">Reset Password</button></form></div>
+      </div>
+      <div class="panel"><h2>Configured Destinations</h2><div class="table-wrap"><table><thead><tr><th>Config ID</th><th>Name</th><th>Status</th><th>Edit</th></tr></thead><tbody id="siteRows"></tbody></table></div></div>
+      <div class="panel"><h2>Current Employee Assignments</h2><div class="table-wrap"><table><thead><tr><th>Employee ID</th><th>Site ID</th><th>Permission</th></tr></thead><tbody id="assignmentRows"></tbody></table></div></div>
+    </section>
+  </main>
+</section>
+<script>
+'use strict';
+// REPLACE THIS WITH YOUR REAL CLOUDFLARE WORKER URL (NO TRAILING SLASH).
+const API_URL = 'https://YOUR-CLOUDFLARE-WORKER-URL.workers.dev';
+const $ = id => document.getElementById(id);
+let token = '', employee = null, verificationToken = '', adminData = null;
+function showScreen(id){['loginScreen','gpsScreen','appScreen'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function message(id,text,kind=''){const el=$(id);el.textContent=text||'';el.className='notice'+(kind?' '+kind:'')+(text?'':' hidden');}
+function setBusy(button,busy,label){button.disabled=busy;if(busy){button.dataset.original=button.textContent;button.textContent=label||'Please wait...';}else{button.textContent=button.dataset.original||button.textContent;}}
+async function api(action,fields={}){
+  if(API_URL.includes('YOUR-CLOUDFLARE-WORKER-URL')) throw new Error('Configure your Cloudflare Worker URL in index.html first.');
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),35000);
+  try{
+    const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token,...fields}),signal:controller.signal,cache:'no-store'});
+    if(!response.ok)throw new Error('Connection error (HTTP '+response.status+').');
+    const data=await response.json();if(!data.ok)throw new Error(data.message||'Request failed.');return data;
+  }catch(e){if(e.name==='AbortError')throw new Error('Request timed out. Please try again.');throw e;}finally{clearTimeout(timeout);}
+}
+function clearPasswordState(){verificationToken='';$('verifyForm').classList.remove('hidden');$('changeForm').classList.add('hidden');$('currentPassword').value='';$('newPassword').value='';$('confirmPassword').value='';message('passwordMsg','');}
+function localLogout(){token='';employee=null;verificationToken='';adminData=null;$('loginPassword').value='';$('loginForm').reset();clearPasswordState();showScreen('loginScreen');}
+async function logout(){const old=token;localLogout();if(old){try{await api('logout',{token:old});}catch(e){console.warn(e);}}}
+$('logoutBtn').addEventListener('click',logout);$('gpsLogout').addEventListener('click',logout);
+$('loginForm').addEventListener('submit',async event=>{
+  event.preventDefault();const btn=$('loginBtn');setBusy(btn,true,'Signing in...');message('loginMsg','');
+  try{const result=await api('login',{employeeId:$('loginId').value.trim(),password:$('loginPassword').value});token=result.token;employee=result.employee;$('loginPassword').value='';$('gpsWelcome').textContent='Welcome, '+employee.name;showScreen('gpsScreen');message('gpsMsg','Tap the button to capture your location.');}
+  catch(e){message('loginMsg',e.message,'error');}finally{setBusy(btn,false);}
+});
+$('gpsBtn').addEventListener('click',()=>{
+  if(!navigator.geolocation){message('gpsMsg','Location is unavailable in this browser.','error');return;}
+  const btn=$('gpsBtn');setBusy(btn,true,'Obtaining GPS...');message('gpsMsg','Requesting device location...');
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    try{message('gpsMsg','Saving verified GPS to Login_Log...');const c=pos.coords;await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
+    catch(e){message('gpsMsg',e.message,'error');}finally{setBusy(btn,false);}
+  },err=>{const errors={1:'Location permission denied. Enable location access in Thunkable and your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:true,timeout:25000,maximumAge:0});
+});
+function renderDashboard(access){$('who').textContent=employee.name+' · '+employee.id+' · '+employee.role;$('verifyId').value=employee.id;const sites=$('sites');sites.replaceChildren();if(!access.sites.length){message('homeMsg','No websites are assigned to your employee ID. Contact Admin.');}else{message('homeMsg','');access.sites.forEach(site=>{const card=document.createElement('article');card.className='site';const h=document.createElement('h3');h.textContent=site.name;const p=document.createElement('p');p.textContent=site.url;const b=document.createElement('button');b.className='btn';b.textContent='Open Website';b.addEventListener('click',()=>{try{const u=new URL(site.url);if(u.protocol!=='https:')throw new Error();window.location.assign(u.href);}catch(e){message('homeMsg','Invalid destination URL. Contact Admin.','error');}});card.append(h,p,b);sites.append(card);});}const isAdmin=!!access.isAdmin;$('adminTab').classList.toggle('hidden',!isAdmin);switchTab('home');}
+function switchTab(tab){['home','password','admin'].forEach(name=>{$(name+'Panel').classList.toggle('hidden',name!==tab);});document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='admin'&&!adminData)loadAdmin();}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+$('verifyForm').addEventListener('submit',async event=>{event.preventDefault();const btn=$('verifyBtn');setBusy(btn,true,'Verifying...');message('passwordMsg','');try{const data=await api('verifyCurrentPassword',{employeeId:$('verifyId').value.trim(),currentPassword:$('currentPassword').value});verificationToken=data.verificationToken;$('currentPassword').value='';$('verifyForm').classList.add('hidden');$('changeForm').classList.remove('hidden');message('passwordMsg','Identity verified. Complete the change within five minutes.','success');}catch(e){message('passwordMsg',e.message,'error');}finally{setBusy(btn,false);}});
+$('changeForm').addEventListener('submit',async event=>{event.preventDefault();const p=$('newPassword').value,c=$('confirmPassword').value;if(p!==c){message('passwordMsg','New password and confirmation do not match.','error');return;}const btn=$('changeBtn');setBusy(btn,true,'Updating password...');try{const result=await api('confirmPasswordChange',{verificationToken,newPassword:p,confirmPassword:c});localLogout();message('loginMsg',result.message||'Password changed. Sign in with the new password.','success');}catch(e){message('passwordMsg',e.message,'error');}finally{setBusy(btn,false);}});
+function fillSelect(id,items,value,label){const el=$(id),previous=el.value;el.replaceChildren();items.forEach(item=>{const o=document.createElement('option');o.value=value(item);o.textContent=label(item);el.append(o);});if([...el.options].some(o=>o.value===previous))el.value=previous;}
+async function loadAdmin(){message('adminMsg','Loading Admin data...');try{const d=await api('adminBootstrap');adminData=d;fillSelect('accessEmployee',d.employees,x=>x.id,x=>x.id+' — '+x.name);fillSelect('statusEmployee',d.employees,x=>x.id,x=>x.id+' — '+x.name+' ('+x.status+')');fillSelect('resetEmployee',d.employees,x=>x.id,x=>x.id+' — '+x.name);fillSelect('accessSite',d.sites,x=>x.id,x=>x.id+' — '+x.name);const rows=$('siteRows');rows.replaceChildren();d.sites.forEach(s=>{const tr=document.createElement('tr');[s.id,s.name,s.status].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td);});const td=document.createElement('td'),btn=document.createElement('button');btn.className='btn secondary small';btn.textContent='Edit';btn.addEventListener('click',()=>{$('siteId').value=s.id;$('siteName').value=s.name;$('siteUrl').value=s.url;$('siteStatus').value=s.status;$('siteId').focus();});td.append(btn);tr.append(td);rows.append(tr);});const arows=$('assignmentRows');arows.replaceChildren();d.assignments.forEach(a=>{const tr=document.createElement('tr');[a.employeeId,a.siteId,a.status].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td);});arows.append(tr);});message('adminMsg','Admin data loaded.','success');}catch(e){message('adminMsg',e.message,'error');}}
+$('refreshAdmin').addEventListener('click',loadAdmin);
+async function submitAdmin(form,action,fields,successText){const btn=form.querySelector('button[type=submit]');setBusy(btn,true,'Saving...');message('adminMsg','');try{const result=await api(action,fields);message('adminMsg',result.message||successText,'success');await loadAdmin();}catch(e){message('adminMsg',e.message,'error');}finally{setBusy(btn,false);}}
+$('siteForm').addEventListener('submit',e=>{e.preventDefault();submitAdmin(e.currentTarget,'adminSaveSite',{siteId:$('siteId').value.trim(),name:$('siteName').value.trim(),url:$('siteUrl').value.trim(),status:$('siteStatus').value},'Destination saved.');});
+$('accessForm').addEventListener('submit',e=>{e.preventDefault();submitAdmin(e.currentTarget,'adminSetAccess',{employeeId:$('accessEmployee').value,siteId:$('accessSite').value,status:$('accessStatus').value},'Permission saved.');});
+$('statusForm').addEventListener('submit',e=>{e.preventDefault();submitAdmin(e.currentTarget,'adminSetEmployeeStatus',{employeeId:$('statusEmployee').value,status:$('employeeStatus').value},'Status saved.');});
+$('resetForm').addEventListener('submit',e=>{e.preventDefault();if(!confirm('Reset the selected employee password?'))return;submitAdmin(e.currentTarget,'adminResetPassword',{employeeId:$('resetEmployee').value,newPassword:$('resetPassword').value},'Password reset.');$('resetPassword').value='';});
+</script>
 </body>
 </html>
