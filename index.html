@@ -226,7 +226,7 @@ $('loginForm').addEventListener('submit',async event=>{
 });
 $('gpsBtn').addEventListener('click',()=>{
   if(!navigator.geolocation){message('gpsMsg','Location is unavailable in this browser.','error');return;}
-  const btn=$('gpsBtn');setBusy(btn,true,'Locating...');message('gpsMsg','Finding your location using the fastest available device fix...');
+  const btn=$('gpsBtn');setBusy(btn,true,'Locating...');message('gpsMsg','Finding your location using available device...');
   navigator.geolocation.getCurrentPosition(async pos=>{
     try{message('gpsMsg','Recording your location securely...');const c=pos.coords;const loc=await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});verifiedCity=String(loc.city||'').trim();renderWeather();loadLiveWeather(c.latitude,c.longitude);message('gpsMsg',verifiedCity?'Your location has been recorded · '+verifiedCity:'Your location has been recorded.','success');const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
     catch(e){message('gpsMsg',e.message,'error');}finally{setBusy(btn,false);}
