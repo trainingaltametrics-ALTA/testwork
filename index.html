@@ -74,6 +74,13 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
 @media(max-width:520px){.weather-orb{width:70px;height:70px;right:9%;top:9%}.weather-banner{padding:13px;gap:9px}.weather-banner-title{font-size:15px}.weather-banner-temp{font-size:21px}}
 @media(prefers-reduced-motion:reduce){.weather-host *{animation:none!important}}
 
+
+/* In-portal site viewer */
+#siteViewerPanel{padding:15px;overflow:hidden}
+.viewer-heading{margin-bottom:10px}
+.viewer-heading h2{margin-bottom:3px}
+#siteViewerFrame{display:block;width:100%;height:calc(100dvh - 250px);min-height:480px;border:1px solid #dbe5f4;border-radius:13px;background:#fff}
+@media(max-width:520px){#siteViewerPanel{padding:10px}#siteViewerFrame{height:calc(100dvh - 210px);min-height:430px}.viewer-heading{align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -112,8 +119,13 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
   <header class="topbar"><div><strong>ANR Employee Portal</strong><div id="who" class="muted" style="color:#cbd7ed"></div></div><button id="logoutBtn" class="btn small" type="button">Logout</button></header>
   <main class="main">
     <div class="weather-banner" aria-live="polite"><div class="weather-banner-icon" id="weatherIcon">✦</div><div><div class="weather-banner-title" id="weatherTitle">Welcome to your workspace</div><div class="weather-banner-sub" id="weatherSubtitle">A beautiful day to get things done</div></div><div class="weather-banner-temp" id="weatherTemp"></div></div>
-    <div class="tabs"><button data-tab="home" class="active">My Websites</button><button data-tab="password">Change Password</button><button data-tab="admin" id="adminTab" class="hidden">Admin Console</button></div>
+    <div class="tabs" id="workspaceTabs"><button data-tab="home" class="active">My Websites</button><button data-tab="password">Change Password</button><button data-tab="admin" id="adminTab" class="hidden">Admin Console</button></div>
     <section id="homePanel" class="panel"><h2>Your Workspace</h2><p class="muted">Welcome back. Choose where you would like to go.</p><div id="locationLine" class="location-line" aria-live="polite"></div><div id="sites" class="grid"></div><div id="homeMsg" class="notice hidden"></div></section>
+    <section id="siteViewerPanel" class="panel hidden" aria-label="Embedded employee website">
+      <div class="row between viewer-heading"><div><h2 id="siteViewerTitle">Your Site</h2><p class="muted">Your assigned website, inside ANR Employee Portal</p></div><button id="viewerBack" class="btn secondary small" type="button">← Back to Workspace</button></div>
+      <div id="viewerNotice" class="notice">If this website does not appear, its owner may have disabled embedding.</div>
+      <iframe id="siteViewerFrame" title="Employee website" referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen; clipboard-read; clipboard-write" loading="eager"></iframe>
+    </section>
     <section id="passwordPanel" class="panel hidden">
       <h2>Change Password</h2><p class="muted">First verify your existing Employee ID and password.</p>
       <form id="verifyForm">
@@ -216,7 +228,7 @@ async function api(action,fields={}){
   }catch(e){if(e.name==='AbortError')throw new Error('Request timed out. Please try again.');throw e;}finally{clearTimeout(timeout);}
 }
 function clearPasswordState(){verificationToken='';$('verifyForm').classList.remove('hidden');$('changeForm').classList.add('hidden');$('currentPassword').value='';$('newPassword').value='';$('confirmPassword').value='';message('passwordMsg','');}
-function localLogout(){weatherState=null;verifiedCity='';token='';employee=null;verificationToken='';adminData=null;$('loginPassword').value='';$('loginForm').reset();clearPasswordState();showScreen('loginScreen');}
+function localLogout(){closeSiteViewer();weatherState=null;verifiedCity='';token='';employee=null;verificationToken='';adminData=null;$('loginPassword').value='';$('loginForm').reset();clearPasswordState();showScreen('loginScreen');}
 async function logout(){const old=token;localLogout();if(old){try{await api('logout',{token:old});}catch(e){console.warn(e);}}}
 $('logoutBtn').addEventListener('click',logout);$('gpsLogout').addEventListener('click',logout);
 $('loginForm').addEventListener('submit',async event=>{
@@ -251,7 +263,7 @@ function renderDashboard(access){
         try{
           const u=new URL(site.url);
           if(u.protocol!=='https:')throw new Error();
-          window.location.assign(u.href);
+          openSiteViewer(site.name,u.href);
         }catch(e){message('homeMsg','Destination is unavailable. Contact Admin.','error');}
       });
       card.append(mark,h,p,b);sites.append(card);
@@ -261,7 +273,22 @@ function renderDashboard(access){
   $('adminTab').classList.toggle('hidden',!isAdmin);
   switchTab('home');
 }
-function switchTab(tab){['home','password','admin'].forEach(name=>{$(name+'Panel').classList.toggle('hidden',name!==tab);});document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='admin'&&!adminData)loadAdmin();}
+function openSiteViewer(name,url){
+  $('siteViewerTitle').textContent=name;
+  $('siteViewerPanel').classList.remove('hidden');
+  $('workspaceTabs').classList.add('hidden');
+  ['homePanel','passwordPanel','adminPanel'].forEach(id=>$(id).classList.add('hidden'));
+  $('viewerNotice').textContent='Loading your assigned site. If it stays blank or is blocked, this Google Site may not allow embedding.';
+  $('siteViewerFrame').src=url;
+  window.scrollTo(0,0);
+}
+function closeSiteViewer(){
+  $('siteViewerFrame').removeAttribute('src');
+  $('siteViewerPanel').classList.add('hidden');
+  $('workspaceTabs').classList.remove('hidden');
+}
+$('viewerBack').addEventListener('click',()=>{closeSiteViewer();switchTab('home');});
+function switchTab(tab){closeSiteViewer();['home','password','admin'].forEach(name=>{$(name+'Panel').classList.toggle('hidden',name!==tab);});document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='admin'&&!adminData)loadAdmin();}
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 $('verifyForm').addEventListener('submit',async event=>{event.preventDefault();const btn=$('verifyBtn');setBusy(btn,true,'Verifying...');message('passwordMsg','');try{const data=await api('verifyCurrentPassword',{employeeId:$('verifyId').value.trim(),currentPassword:$('currentPassword').value});verificationToken=data.verificationToken;$('currentPassword').value='';$('verifyForm').classList.add('hidden');$('changeForm').classList.remove('hidden');message('passwordMsg','Identity verified. Complete the change within five minutes.','success');}catch(e){message('passwordMsg',e.message,'error');}finally{setBusy(btn,false);}});
 $('changeForm').addEventListener('submit',async event=>{event.preventDefault();const p=$('newPassword').value,c=$('confirmPassword').value;if(p!==c){message('passwordMsg','New password and confirmation do not match.','error');return;}const btn=$('changeBtn');setBusy(btn,true,'Updating password...');try{const result=await api('confirmPasswordChange',{verificationToken,newPassword:p,confirmPassword:c});localLogout();message('loginMsg',result.message||'Password changed. Sign in with the new password.','success');}catch(e){message('passwordMsg',e.message,'error');}finally{setBusy(btn,false);}});
