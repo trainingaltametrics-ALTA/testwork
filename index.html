@@ -226,11 +226,11 @@ $('loginForm').addEventListener('submit',async event=>{
 });
 $('gpsBtn').addEventListener('click',()=>{
   if(!navigator.geolocation){message('gpsMsg','Location is unavailable in this browser.','error');return;}
-  const btn=$('gpsBtn');setBusy(btn,true,'Obtaining GPS...');message('gpsMsg','Requesting device location...');
+  const btn=$('gpsBtn');setBusy(btn,true,'Locating...');message('gpsMsg','Finding your location using the fastest available device fix...');
   navigator.geolocation.getCurrentPosition(async pos=>{
     try{message('gpsMsg','Recording your location securely...');const c=pos.coords;const loc=await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});verifiedCity=String(loc.city||'').trim();renderWeather();loadLiveWeather(c.latitude,c.longitude);message('gpsMsg',verifiedCity?'Your location has been recorded · '+verifiedCity:'Your location has been recorded.','success');const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
     catch(e){message('gpsMsg',e.message,'error');}finally{setBusy(btn,false);}
-  },err=>{const errors={1:'Location permission denied. Enable location access in Thunkable and your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:true,timeout:25000,maximumAge:0});
+  },err=>{const errors={1:'Location permission denied. Enable location access in Thunkable and your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:false,timeout:12000,maximumAge:60000});
 });
 function renderDashboard(access){
   $('who').textContent=employee.name+' · '+employee.id+' · '+employee.role;
