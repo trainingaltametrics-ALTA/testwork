@@ -79,7 +79,7 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
 <body>
 <section id="loginScreen" class="screen">
   <div class="card">
-    <div class="brand"><div class="brand-mark">✦</div><h1>ANR Employee Portal</h1><p class="muted">Your secure workspace, beautifully connected</p></div><div style="text-align:center"><span class="ambient-pill"><span class="dot"></span><span id="timeGreeting">Welcome</span></span></div>
+    <div class="brand"><div class="brand-mark">💎 𝓮𝓡 💎</div><h1>ANR Employee Portal</h1><p class="muted">Your secure workspace, beautifully connected</p></div><div style="text-align:center"><span class="ambient-pill"><span class="dot"></span><span id="timeGreeting">Welcome</span></span></div>
     <form id="loginForm">
       <div class="field"><label for="loginId">Employee ID</label><input id="loginId" autocomplete="username" required placeholder="Enter Employee ID"></div>
       <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password"></div>
@@ -97,8 +97,8 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
 </div>
   <div class="card">
     <div class="brand"><div class="brand-mark">⌖</div><h1>ANR Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p><div class="weather-chip" id="gpsWeather">Your sky is coming into focus</div></div>
-    <p class="muted">To continue, allow location access. Your coordinates will be saved to your login record.</p>
-    <button id="gpsBtn" class="btn full" type="button">VERIFY MY LOCATION</button>
+    <p class="muted">To continue, allow location access.</p>
+    <button id="gpsBtn" class="btn full" type="button">VERIFY LOCATION</button>
     <div id="gpsMsg" class="notice" role="status">Waiting for location permission.</div>
     <button id="gpsLogout" class="btn secondary full" type="button">Back to Login</button>
   </div>
@@ -230,7 +230,7 @@ $('gpsBtn').addEventListener('click',()=>{
   navigator.geolocation.getCurrentPosition(async pos=>{
     try{message('gpsMsg','Recording your location securely...');const c=pos.coords;const loc=await api('location',{latitude:c.latitude,longitude:c.longitude,accuracy:c.accuracy});verifiedCity=String(loc.city||'').trim();renderWeather();loadLiveWeather(c.latitude,c.longitude);message('gpsMsg',verifiedCity?'Your location has been recorded · '+verifiedCity:'Your location has been recorded.','success');const access=await api('access');employee=access.employee;renderDashboard(access);showScreen('appScreen');}
     catch(e){message('gpsMsg',e.message,'error');}finally{setBusy(btn,false);}
-  },err=>{const errors={1:'Location permission denied. Enable location access in Thunkable and your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:false,timeout:12000,maximumAge:60000});
+  },err=>{const errors={1:'Location permission denied. Enable location access in your device settings.',2:'Device location unavailable. Enable GPS and try again.',3:'Location timed out. Try again.'};message('gpsMsg',errors[err.code]||err.message,'error');setBusy(btn,false);},{enableHighAccuracy:false,timeout:12000,maximumAge:60000});
 });
 function renderDashboard(access){
   $('who').textContent=employee.name+' · '+employee.id+' · '+employee.role;
