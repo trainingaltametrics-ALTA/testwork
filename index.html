@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b1730">
-<title>ANR Employee Portal</title>
+<title>eR Plus Employee Portal</title>
 <style>
 :root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#18243b;background:#edf2f9;font-synthesis:none}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100dvh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}a{color:#2356d8;overflow-wrap:anywhere}
@@ -74,12 +74,28 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
 @media(max-width:520px){.weather-orb{width:70px;height:70px;right:9%;top:9%}.weather-banner{padding:13px;gap:9px}.weather-banner-title{font-size:15px}.weather-banner-temp{font-size:21px}}
 @media(prefers-reduced-motion:reduce){.weather-host *{animation:none!important}}
 
+
+/* eR Plus · Venus-inspired six-point luminous identity (visual only) */
+.er6-emblem{width:112px;height:112px;position:relative;display:grid;place-items:center;margin:0 auto 14px;isolation:isolate}
+.er6-emblem::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle,#fff5c8 0%,#ffe2a34d 32%,transparent 70%);filter:blur(8px);animation:er6breathe 3.6s ease-in-out infinite alternate}
+.er6-ring{position:absolute;inset:10px;border:1.5px solid #e3ae51;border-radius:50%;box-shadow:0 0 16px #e5b45c80,inset 0 0 12px #e5b45c33;animation:er6rotate 18s linear infinite}
+.er6-ring::after{content:"";position:absolute;inset:9px;border:1px solid #d8a75a66;border-radius:50%}
+.er6-dot{position:absolute;left:calc(50% - 4px);top:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:#fff4cb;box-shadow:0 0 8px #f6c26a,0 0 16px #f3bd60;transform:rotate(var(--a)) translateY(-46px)}
+.er6-word{z-index:1;font-size:30px;font-weight:900;letter-spacing:-1.8px;line-height:1;color:#9b6325;text-shadow:0 0 8px #ffdf9c,0 0 18px #f7b951aa}
+.er6-word sup{font-size:17px;vertical-align:super;margin-left:1px}
+.er6-heading{background:linear-gradient(100deg,#85511d,#e8b45c,#b2772c,#f5d89d,#85511d);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:er6shine 6s ease-in-out infinite}
+.er6-small{display:inline-block;font-weight:900;letter-spacing:-.3px;color:#ffe0a3;text-shadow:0 0 8px #ffc976a0,0 0 18px #e9b45a77}
+.er6-small sup{font-size:.65em}
+@keyframes er6rotate{to{transform:rotate(360deg)}}
+@keyframes er6breathe{to{opacity:.6;transform:scale(1.16)}}
+@keyframes er6shine{to{background-position:220% 0}}
+@media(prefers-reduced-motion:reduce){.er6-ring,.er6-emblem::before,.er6-heading{animation:none!important}}
 </style>
 </head>
 <body>
 <section id="loginScreen" class="screen">
   <div class="card">
-    <div class="brand"><div class="brand-mark"> ANR✨</div><h1>✨Employee Portal</h1><p class="muted">Your secure workspace, beautifully connected</p></div><div style="text-align:center"><span class="ambient-pill"><span class="dot"></span><span id="timeGreeting">Welcome</span></span></div>
+    <div class="brand"><div class="er6-emblem" aria-label="eR Plus six-point golden emblem"><div class="er6-ring"><i class="er6-dot" style="--a:0deg"></i><i class="er6-dot" style="--a:60deg"></i><i class="er6-dot" style="--a:120deg"></i><i class="er6-dot" style="--a:180deg"></i><i class="er6-dot" style="--a:240deg"></i><i class="er6-dot" style="--a:300deg"></i></div><span class="er6-word">eR<sup>+</sup></span></div><h1 class="er6-heading">eR Plus Employee Portal</h1><p class="muted">Your secure workspace, beautifully connected</p></div><div style="text-align:center"><span class="ambient-pill"><span class="dot"></span><span id="timeGreeting">Welcome</span></span></div>
     <form id="loginForm">
       <div class="field"><label for="loginId">Employee ID</label><input id="loginId" autocomplete="username" required placeholder="Enter Employee ID"></div>
       <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password"></div>
@@ -96,7 +112,7 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
   <div class="weather-stars"></div><div class="weather-particles"></div>
 </div>
   <div class="card">
-    <div class="brand"><div class="brand-mark">⌖</div><h1>ANR Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p><div class="weather-chip" id="gpsWeather">Your sky is coming into focus</div></div>
+    <div class="brand"><div class="er6-emblem" aria-label="eR Plus six-point golden emblem"><div class="er6-ring"><i class="er6-dot" style="--a:0deg"></i><i class="er6-dot" style="--a:60deg"></i><i class="er6-dot" style="--a:120deg"></i><i class="er6-dot" style="--a:180deg"></i><i class="er6-dot" style="--a:240deg"></i><i class="er6-dot" style="--a:300deg"></i></div><span class="er6-word">eR<sup>+</sup></span></div><h1 class="er6-heading">eR Plus Location Verification</h1><p class="muted" id="gpsWelcome">Welcome</p><div class="weather-chip" id="gpsWeather">Your sky is coming into focus</div></div>
     <p class="muted">To continue, allow location access.</p>
     <button id="gpsBtn" class="btn full" type="button">VERIFY LOCATION</button>
     <div id="gpsMsg" class="notice" role="status">Waiting for location permission.</div>
@@ -109,7 +125,7 @@ body[data-time="night"]{--sky-a:#071126;--sky-b:#18264f;--sky-glow:#6a7cd4}
   <div class="weather-cloud cloud-one"></div><div class="weather-cloud cloud-two"></div>
   <div class="weather-stars"></div><div class="weather-particles"></div>
 </div>
-  <header class="topbar"><div><strong>ANR Employee Portal</strong><div id="who" class="muted" style="color:#cbd7ed"></div></div><button id="logoutBtn" class="btn small" type="button">Logout</button></header>
+  <header class="topbar"><div><strong><span class="er6-small">✦ eR<sup>+</sup></span> Employee Portal</strong><div id="who" class="muted" style="color:#cbd7ed"></div></div><button id="logoutBtn" class="btn small" type="button">Logout</button></header>
   <main class="main">
     <div class="weather-banner" aria-live="polite"><div class="weather-banner-icon" id="weatherIcon">✦</div><div><div class="weather-banner-title" id="weatherTitle">Welcome to your workspace</div><div class="weather-banner-sub" id="weatherSubtitle">A beautiful day to get things done</div></div><div class="weather-banner-temp" id="weatherTemp"></div></div>
     <div class="tabs"><button data-tab="home" class="active">My Websites</button><button data-tab="password">Change Password</button><button data-tab="admin" id="adminTab" class="hidden">Admin Console</button></div>
@@ -182,7 +198,7 @@ function renderWeather(){
   $('gpsWeather').textContent=weatherState?`${w.icon} ${w.label} · ${place}`:`${isNight?'🌙':'☀️'} ${place} · Sky-inspired experience`;
   $('weatherIcon').textContent=w.icon;
   $('weatherTitle').textContent=weatherState?`${w.label} in ${place}`:`Welcome${verifiedCity?' to '+verifiedCity:''}`;
-  $('weatherSubtitle').textContent=weatherState?'Live local conditions · ANR Employee Portal':'Your workspace is ready';
+  $('weatherSubtitle').textContent=weatherState?'Live local conditions · eR Plus Employee Portal':'Your workspace is ready';
   $('weatherTemp').textContent=weatherState?Math.round(weatherState.temp)+'°C':'';
 }
 async function loadLiveWeather(latitude,longitude){
